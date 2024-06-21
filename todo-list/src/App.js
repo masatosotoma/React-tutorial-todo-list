@@ -1,9 +1,15 @@
-import './App.css';
+import TodoList from "./TodoList";
 
 function App() {
+  const [todos, setTodos] = useState(["Todo1", "Todo2"]);
   return (
-    <div className="App">
-    </div>
+    <>
+      <TodoList todos={todos} />
+      <input type="text" />
+      <button>Add tasks</button>
+      <button>Delete Completed tasks</button>
+      <div>Remaining tasks:0</div>
+    </>
   );
 }
 
