@@ -3,15 +3,14 @@ import TodoList from "./TodoList";
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
-  const [todos, setTodos] = useState([
-    { id: 1, name: "Todo1", completed: false },
-  ]);
+  const [todos, setTodos] = useState([]);
 
   const todoNameRef = useRef();
 
   const handleAddTodo = () => {
     //add tasks
     const name = todoNameRef.current.value;
+    if (name === "") return;
     setTodos((prevTodos) => {
       return [...prevTodos, { id: uuidv4(), name: name, completed: false }];
     });
@@ -25,13 +24,20 @@ function App() {
     setTodos(newTodos);
   };
 
+  const handleClear = () => {
+    const newTodos = todos.filter((todo) => !todo.completed);
+    setTodos(newTodos);
+  };
+
   return (
     <>
       <TodoList todos={todos} toggleTodo={toggleTodo} />
       <input type="text" ref={todoNameRef} />
       <button onClick={handleAddTodo}>Add tasks</button>
-      <button>Delete Completed tasks</button>
-      <div>Remaining tasks:0</div>
+      <button onClick={handleClear}>Delete Completed tasks</button>
+      <div>
+        Remaining tasks:{todos.filter((todo) => !todo.completed).length}
+      </div>
     </>
   );
 }
